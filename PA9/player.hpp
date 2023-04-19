@@ -68,6 +68,20 @@ public:
 		return this->shotSpeed;
 	}
 
+	// item logic
+	void applyItem(Item item)
+	{
+		// this is probably an ass way of doing this... maybe enum? How to avoid if/else?
+		if (item.get_stat() == "moveSpeed")
+		{
+
+		}
+		else if (item.get_stat() == "Size")
+		{
+
+		}
+	}
+
 private:
 	double moveSpeed;
 	double Size;
