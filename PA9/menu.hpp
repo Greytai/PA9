@@ -34,7 +34,8 @@ public:
 		cout << endl;
 
 		cout << "1. Play" << endl;
-		cout << "2. Exit" << endl;
+		cout << "2. How to Play" << endl;
+		cout << "3. Exit" << endl;
 	};
 
 	//Gets user input
@@ -44,7 +45,7 @@ public:
 
 		do {
 			cin >> n;
-		} while (n < 1 || n>2);
+		} while (n < 1 || n>3);
 
 		return n;
 	};
@@ -52,20 +53,46 @@ public:
 	//Full menu
 	void menuRunner()
 	{
-		int choice = 0;
+		do {
 
-		this->displayMenu();
+			system("cls");
 
-		this->setChoice(this->userChoice());
+			int choice = 0;
 
-		switch (this->getChoice())
-		{
-		case 1: cout << "Game." << endl; //Start game function
-			break;
-		case 2: exit(0);
-			break;
-		default: cout << "Error." << endl;
-		}
+			this->displayMenu();
+
+			this->setChoice(this->userChoice());
+
+			switch (this->getChoice())
+			{
+			case 1: cout << "Playing Game..." << endl; //Start game function
+				break;
+			case 2: this->printHowToPlay();
+				break;
+			case 3: exit(0);
+				break;
+			default: cout << "Error." << endl;
+			}
+		} while (this->getChoice() == 2);
+
+
+	};
+
+	void printHowToPlay()
+	{
+		cout << "In Andy's Classroom, you are Andy." << endl;
+		cout << "You are a professor who has been attacked by evil creatures while trying to help your students succeed." << endl;
+		cout << "You decide to protect yourself, the students, and the world. Good luck." << endl;
+
+		cout << "=========================" << endl;
+		cout << "Controls:" << endl;
+		cout << "W: Move Up" << endl;
+		cout << "A: Move Left" << endl;
+		cout << "S: Move Down" << endl;
+		cout << "D: Move Right" << endl;
+		cout << "ESC/Escape: Close Game" << endl;
+
+		system("pause");
 	};
 
 private:
