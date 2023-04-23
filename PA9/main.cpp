@@ -1,8 +1,7 @@
 #include "menu.hpp"
 
 #include <SFML/Graphics.hpp>
-
-#include "char.hpp"
+#include "player.hpp"
 
 int main(void)
 {
@@ -13,15 +12,19 @@ int main(void)
     //Program will only continue once they have entered "Play" in menu.
 
     //Creates game window called "window"
-    sf::RenderWindow window(sf::VideoMode(1500, 1500), "Andy's Classroom");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Andy's Classroom");
    
     sf::Texture playermodel; //Creates a texture 
     playermodel.loadFromFile("Andy.png"); //Sets texture to sprite **CHANGE FILE LOCATION!!!!!
-    sf::Sprite andy(playermodel); //Creates sprite, sets it to playermodel sprite
-    andy.setScale(3.5, 3.5); //Changes Andy ize
+
+    Player andy; // Player inherits from Sprite
+    andy.set_default(); // sets player stats to default values
+    andy.setTexture(playermodel); // sets andy's texture to the png
+
+    //sf::Sprite andy(playermodel); //Creates sprite, sets it to playermodel sprite
+    //andy.setScale(3.5, 3.5); //Changes Andy size
     
-    //CREATING CHARACTERS
-    Char player;
+
 
     while (window.isOpen())
     {
@@ -31,21 +34,23 @@ int main(void)
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        
+        // Controls
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            andy.move(0,-.75);
+            andy.move(0,-andy.get_moveSpeed());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            andy.move(-.75, 0);
+            andy.move(-andy.get_moveSpeed(), 0);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            andy.move(0,.75);
+            andy.move(0, andy.get_moveSpeed());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            andy.move(.75, 0);
+            andy.move(andy.get_moveSpeed(), 0);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {

@@ -3,10 +3,11 @@
 #include "libraries.hpp"
 #include "item.hpp"
 
-class Player
+class Player : public sf::Sprite
 {
 public:
-	Player() // default constructor
+	// default constructor
+	Player() 
 	{
 		this->moveSpeed = -1;
 		this->Size = -1;
@@ -23,7 +24,8 @@ public:
 	}
 	void set_Size(double x)
 	{
-		this->Size = x;
+		this->Size = x; // stores value
+		this->setScale(this->get_Size(), this->get_Size()); // sets value to real scale
 	}
 	void set_Health(double x)
 	{
@@ -40,6 +42,16 @@ public:
 	void set_shotSpeed(double x)
 	{
 		this->shotSpeed = x;
+	}
+
+	void set_default()
+	{
+		this->set_moveSpeed(0.50);
+		this->set_Size(3.5);
+		this->set_Health(5);
+		this->set_shotDamage(1);
+		this->set_shotSize(1);
+		this->set_shotSpeed(1);
 	}
 
 	// getters
@@ -89,4 +101,5 @@ private:
 	double shotDamage;
 	double shotSize;
 	double shotSpeed;
+	sf::Sprite shotSprite;
 };
