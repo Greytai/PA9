@@ -13,6 +13,7 @@ int main(void)
 
     //Creates game window called "window"
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Andy's Classroom");
+    window.setFramerateLimit(30);
    
     sf::Texture playermodel; //Creates a texture 
     playermodel.loadFromFile("Andy.png"); //Sets texture to sprite **CHANGE FILE LOCATION!!!!!
@@ -35,7 +36,7 @@ int main(void)
                 window.close();
         }
         
-        // Controls
+        // Movement
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
             andy.move(0,-andy.get_moveSpeed());
@@ -52,6 +53,27 @@ int main(void)
         {
             andy.move(andy.get_moveSpeed(), 0);
         }
+
+        // Shooting
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        {
+
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        {
+
+        }
+
+        // Misc.
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
             exit(0);

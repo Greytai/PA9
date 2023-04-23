@@ -43,16 +43,27 @@ public:
 	{
 		this->shotSpeed = x;
 	}
+	void set_shotRate(double x)
+	{
+		this->shotRate = x;
+	}
+	void set_shotSprite(sf::Texture sprite)
+	{
+		this->shotSprite.setTexture(sprite);
+	}
 
 	void set_default()
 	{
-		this->set_moveSpeed(0.50);
+		this->set_moveSpeed(10);
 		this->set_Size(3.5);
 		this->set_Health(5);
 		this->set_shotDamage(1);
 		this->set_shotSize(1);
-		this->set_shotSpeed(1);
+		this->set_shotSpeed(8);
+		this->set_shotRate(5);
 	}
+
+
 
 	// getters
 	double get_moveSpeed()
@@ -79,6 +90,10 @@ public:
 	{
 		return this->shotSpeed;
 	}
+	sf::Sprite get_shotSprite()
+	{
+		return this->shotSprite;
+	}
 
 	// item logic
 	void applyItem(Item item)
@@ -100,6 +115,7 @@ private:
 	double Health;
 	double shotDamage;
 	double shotSize;
-	double shotSpeed;
+	double shotSpeed; // how fast the projectile moves
+	double shotRate; // how often the projectile can be fired
 	sf::Sprite shotSprite;
 };
