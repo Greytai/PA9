@@ -2,6 +2,7 @@
 
 #include "libraries.hpp"
 #include "item.hpp"
+#include "projectile.hpp"
 
 class Player : public sf::Sprite
 {
@@ -12,9 +13,7 @@ public:
 		this->moveSpeed = -1;
 		this->Size = -1;
 		this->Health = -1;
-		this->shotDamage = -1;
-		this->shotSize = -1;
-		this->shotSpeed = -1;
+		this->Shot = Projectile();
 	}
 
 	// setters
@@ -31,38 +30,17 @@ public:
 	{
 		this->Health = x;
 	}
-	void set_shotDamage(double x)
-	{
-		this->shotDamage = x;
-	}
-	void set_shotSize(double x)
-	{
-		this->shotSize = x;
-	}
-	void set_shotSpeed(double x)
-	{
-		this->shotSpeed = x;
-	}
-	void set_shotRate(double x)
-	{
-		this->shotRate = x;
-	}
-	void set_shotSprite(sf::Texture sprite)
-	{
-		this->shotSprite.setTexture(sprite);
-	}
 
 	void set_default()
 	{
 		this->set_moveSpeed(10);
 		this->set_Size(3.5);
 		this->set_Health(5);
-		this->set_shotDamage(1);
-		this->set_shotSize(1);
-		this->set_shotSpeed(8);
-		this->set_shotRate(5);
+		this->Shot.set_shotDamage(1);
+		this->Shot.set_shotSize(1);
+		this->Shot.set_shotSpeed(8);
+		this->Shot.set_shotRate(5);
 	}
-
 
 
 	// getters
@@ -78,21 +56,11 @@ public:
 	{
 		return this->Health;
 	}
-	double get_shotDamage()
+
+	// shot logic
+	void set_ShotTexture(sf::Texture texture)
 	{
-		return this->shotDamage;
-	}
-	double get_shotSize()
-	{
-		return this->shotSize;
-	}
-	double get_shotSpeed()
-	{
-		return this->shotSpeed;
-	}
-	sf::Sprite get_shotSprite()
-	{
-		return this->shotSprite;
+		this->Shot.setTexture(texture);
 	}
 
 	// item logic
@@ -113,9 +81,5 @@ private:
 	double moveSpeed;
 	double Size;
 	double Health;
-	double shotDamage;
-	double shotSize;
-	double shotSpeed; // how fast the projectile moves
-	double shotRate; // how often the projectile can be fired
-	sf::Sprite shotSprite;
+	Projectile Shot;
 };
