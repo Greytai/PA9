@@ -18,9 +18,16 @@ int main(void)
     sf::Texture playermodel; //Creates a texture 
     playermodel.loadFromFile("Andy.png"); //Sets texture to sprite **CHANGE FILE LOCATION!!!!!
 
+    sf::Texture defaultShot;
+    defaultShot.loadFromFile("A+.png");
+
     Player andy; // Player inherits from Sprite
     andy.set_default(); // sets player stats to default values
     andy.setTexture(playermodel); // sets andy's texture to the png
+    andy.Shot.setTexture(defaultShot); // sets sprite texture to default
+    andy.Shots.push_back(andy.Shot); // puts a shot in the vector
+
+    int shotTimer = 0; // timer that gets compared to andy's shotRate value to limit firerate
 
     //sf::Sprite andy(playermodel); //Creates sprite, sets it to playermodel sprite
     //andy.setScale(3.5, 3.5); //Changes Andy size
@@ -55,22 +62,39 @@ int main(void)
         }
 
         // Shooting
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        if (shotTimer < andy.Shot.get_shotRate()) 
         {
-
+            // each frame, shotTimer increments by 1 this means that the shotRate value
+            // is equal to the number of frames of cooldown it takes to fire again
+            // the lower the shotRate, the faster andy shoots
+            shotTimer++;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && shotTimer > andy.Shot.get_shotRate())
         {
 
+            // this needs redoing
+            andy.Shot.setPosition(andy.getPosition());
+            andy.Shots.push_back(andy.Shot);
+
+            shotTimer = 0;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && shotTimer > andy.Shot.get_shotRate())
         {
 
+
+            shotTimer = 0;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && shotTimer > andy.Shot.get_shotRate())
         {
 
+
+            shotTimer = 0;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && shotTimer > andy.Shot.get_shotRate())
+        {
+
+
+            shotTimer = 0;
         }
 
         // Misc.
@@ -78,10 +102,6 @@ int main(void)
         {
             exit(0);
         }
-
-
-
-
 
 
         window.clear();

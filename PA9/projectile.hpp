@@ -21,30 +21,31 @@ public:
 	void set_shotSize(double x)
 	{
 		this->shotSize = x;
+		this->setScale(this->get_shotSize(), this->get_shotSize());
 	}
 	void set_shotSpeed(double x)
 	{
 		this->shotSpeed = x;
 	}
-	void set_shotRate(double x)
+	void set_shotRate(int x)
 	{
 		this->shotRate = x;
 	}
 
 	// getters
-	double get_shotDamage()
+	virtual double get_shotDamage()
 	{
 		return this->shotDamage;
 	}
-	double get_shotSize()
+	virtual double get_shotSize()
 	{
 		return this->shotSize;
 	}
-	double get_shotSpeed()
+	virtual double get_shotSpeed()
 	{
 		return this->shotSpeed;
 	}
-	double get_shotRate()
+	virtual int get_shotRate()
 	{
 		return this->shotRate;
 	}
@@ -53,5 +54,6 @@ private:
 	double shotDamage;
 	double shotSize;
 	double shotSpeed; // how fast the projectile moves
-	double shotRate; // how often the projectile can be fired
+	int shotRate; // how often the projectile can be fired | number of frames of cooldown it takes to fire again
+				  // the lower the shotRate, the faster it shoots
 };

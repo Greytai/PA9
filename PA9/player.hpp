@@ -37,9 +37,9 @@ public:
 		this->set_Size(3.5);
 		this->set_Health(5);
 		this->Shot.set_shotDamage(1);
-		this->Shot.set_shotSize(1);
+		this->Shot.set_shotSize(10);
 		this->Shot.set_shotSpeed(8);
-		this->Shot.set_shotRate(5);
+		this->Shot.set_shotRate(1);
 	}
 
 
@@ -57,11 +57,7 @@ public:
 		return this->Health;
 	}
 
-	// shot logic
-	void set_ShotTexture(sf::Texture texture)
-	{
-		this->Shot.setTexture(texture);
-	}
+	// misc. logic
 
 	// item logic
 	void applyItem(Item item)
@@ -77,9 +73,11 @@ public:
 		}
 	}
 
+	std::vector <Projectile> Shots; // "ammo store" in a way; contains shots and is refilled using .push_back
+	Projectile Shot; // public so we can access the Shot in the controls segment of main without rewriting every function
+					 // from SFML
 private:
 	double moveSpeed;
 	double Size;
 	double Health;
-	Projectile Shot;
 };
