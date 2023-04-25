@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "libraries.hpp"
-#include "player.hpp"
 #include "andy.hpp"
 
 int main(void)
@@ -21,10 +20,7 @@ int main(void)
     sf::Texture defaultShot;
     defaultShot.loadFromFile("A+.png");
 
-    // andy setup
-    //Player andy; // Player inherits from Sprite
-    //andy.set_default(); // sets player stats to default values
-    //andy.setTexture(playermodel); // sets andy's texture to the png
+    
     //andy.Shot.setTexture(defaultShot); // sets sprite texture to default
     //andy.Shots.push_back(andy.Shot); // puts a shot in the vector
     int shotTimer = 0; // timer that gets compared to andy's shotRate value to limit firerate
