@@ -1,6 +1,7 @@
 #include "menu.hpp"
 
 #include <SFML/Graphics.hpp>
+#include "libraries.hpp"
 #include "player.hpp"
 
 int main(void)
@@ -15,19 +16,41 @@ int main(void)
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Andy's Classroom");
     window.setFramerateLimit(30);
    
+    // andy texture
     sf::Texture playermodel; //Creates a texture 
     playermodel.loadFromFile("Andy.png"); //Sets texture to sprite **CHANGE FILE LOCATION!!!!!
 
+    // shot texture
     sf::Texture defaultShot;
     defaultShot.loadFromFile("A+.png");
 
+    // andy setup
     Player andy; // Player inherits from Sprite
     andy.set_default(); // sets player stats to default values
     andy.setTexture(playermodel); // sets andy's texture to the png
     andy.Shot.setTexture(defaultShot); // sets sprite texture to default
     andy.Shots.push_back(andy.Shot); // puts a shot in the vector
-
     int shotTimer = 0; // timer that gets compared to andy's shotRate value to limit firerate
+
+    // hearts setup
+    sf::Texture tHeartFull, tHeartEmpty;
+    tHeartFull.loadFromFile("HeartFull.png");
+    tHeartEmpty.loadFromFile("HeartEmpty.png");
+    sf::Sprite HeartFull(tHeartFull);
+    sf::Sprite HeartEmpty(tHeartEmpty);
+    HeartFull.setScale(4, 4);
+    HeartEmpty.setScale(4, 4);
+    std::vector <sf::Sprite> MaxHeartFull;
+    std::vector <sf::Sprite> MaxHeartEmpty;
+    MaxHeartFull.push_back(HeartFull);
+    MaxHeartFull.push_back(HeartFull);
+    MaxHeartFull.push_back(HeartFull);
+    MaxHeartEmpty.push_back(HeartEmpty);
+    MaxHeartEmpty.push_back(HeartEmpty);
+    MaxHeartEmpty.push_back(HeartEmpty);
+    int curHearts = 0;
+    int maxHearts = 0;
+    int heartIterator = 0;
 
     //sf::Sprite andy(playermodel); //Creates sprite, sets it to playermodel sprite
     //andy.setScale(3.5, 3.5); //Changes Andy size
@@ -97,6 +120,28 @@ int main(void)
             shotTimer = 0;
         }
 
+        // UI
+        curHearts = andy.get_Health();
+        maxHearts = andy.get_maxHealth();
+        heartIterator = 0;
+        while (heartIterator < curHearts)
+        {
+            MaxHeartFull[heartIterator].setPosition(15 + (55 * heartIterator), 15); // positions based off vector index
+            window.draw(MaxHeartFull[heartIterator]);
+
+            heartIterator++;
+        }
+        if (curHearts < maxHearts)
+        {
+            while ((heartIterator - curHearts) < (maxHearts - curHearts))
+            {
+                MaxHeartEmpty[heartIterator - curHearts].setPosition(15+ (55 * heartIterator), 15);
+                window.draw(MaxHeartEmpty[heartIterator - curHearts]);
+
+                heartIterator++;
+            }
+
+        }
         // Misc.
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
@@ -104,9 +149,11 @@ int main(void)
         }
 
 
-        window.clear();
+
         window.draw(andy); //Creates Andy, played by user
+
         window.display();
+        window.clear();
     }
 
     //Exiting message in main console, not game console

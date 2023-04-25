@@ -26,16 +26,21 @@ public:
 		this->Size = x; // stores value
 		this->setScale(this->get_Size(), this->get_Size()); // sets value to real scale
 	}
-	void set_Health(double x)
+	void set_Health(int x)
 	{
 		this->Health = x;
+	}
+	void set_maxHealth(int x)
+	{
+		this->maxHealth = x;
 	}
 
 	void set_default()
 	{
 		this->set_moveSpeed(10);
 		this->set_Size(3.5);
-		this->set_Health(5);
+		this->set_Health(3);
+		this->set_maxHealth(3);
 		this->Shot.set_shotDamage(1);
 		this->Shot.set_shotSize(10);
 		this->Shot.set_shotSpeed(8);
@@ -52,9 +57,13 @@ public:
 	{
 		return this->Size;
 	}
-	double get_Health()
+	int get_Health()
 	{
 		return this->Health;
+	}
+	int get_maxHealth()
+	{
+		return this->maxHealth;
 	}
 
 	// misc. logic
@@ -79,5 +88,6 @@ public:
 private:
 	double moveSpeed;
 	double Size;
-	double Health;
+	int Health;
+	int maxHealth;
 };
