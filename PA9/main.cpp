@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "libraries.hpp"
 #include "player.hpp"
+#include "andy.hpp"
 
 int main(void)
 {
@@ -15,22 +16,21 @@ int main(void)
     //Creates game window called "window"
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Andy's Classroom");
     window.setFramerateLimit(30);
-   
-    // andy texture
-    sf::Texture playermodel; //Creates a texture 
-    playermodel.loadFromFile("Andy.png"); //Sets texture to sprite **CHANGE FILE LOCATION!!!!!
 
     // shot texture
     sf::Texture defaultShot;
     defaultShot.loadFromFile("A+.png");
 
     // andy setup
-    Player andy; // Player inherits from Sprite
-    andy.set_default(); // sets player stats to default values
-    andy.setTexture(playermodel); // sets andy's texture to the png
-    andy.Shot.setTexture(defaultShot); // sets sprite texture to default
-    andy.Shots.push_back(andy.Shot); // puts a shot in the vector
+    //Player andy; // Player inherits from Sprite
+    //andy.set_default(); // sets player stats to default values
+    //andy.setTexture(playermodel); // sets andy's texture to the png
+    //andy.Shot.setTexture(defaultShot); // sets sprite texture to default
+    //andy.Shots.push_back(andy.Shot); // puts a shot in the vector
     int shotTimer = 0; // timer that gets compared to andy's shotRate value to limit firerate
+
+    //Test
+    Andy andy;
 
     // hearts setup
     sf::Texture tHeartFull, tHeartEmpty;
@@ -52,11 +52,7 @@ int main(void)
     int maxHearts = 0;
     int heartIterator = 0;
 
-    //sf::Sprite andy(playermodel); //Creates sprite, sets it to playermodel sprite
-    //andy.setScale(3.5, 3.5); //Changes Andy size
-    
-
-
+    //Game
     while (window.isOpen())
     {
         sf::Event event;
@@ -65,23 +61,23 @@ int main(void)
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        
+
         // Movement
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //Moves Andy Up/North
         {
-            andy.move(0,-andy.get_moveSpeed());
+            andy.move(0, -andy.getSpeed());
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) //Moves Andy Left/West
         {
-            andy.move(-andy.get_moveSpeed(), 0);
+            andy.move(-andy.getSpeed(), 0);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) //Moves Andy Down/South
         {
-            andy.move(0, andy.get_moveSpeed());
+            andy.move(0, andy.getSpeed());
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //Moves Andy Right/East
         {
-            andy.move(andy.get_moveSpeed(), 0);
+            andy.move(andy.getSpeed(), 0);
         }
 
         // Shooting
@@ -121,8 +117,8 @@ int main(void)
         }
 
         // UI
-        curHearts = andy.get_Health();
-        maxHearts = andy.get_maxHealth();
+        curHearts = andy.getHealth();
+        maxHearts = andy.getMaxHealth();
         heartIterator = 0;
         while (heartIterator < curHearts)
         {
@@ -150,8 +146,7 @@ int main(void)
 
 
 
-        window.draw(andy); //Creates Andy, played by user
-
+        window.draw(andy); //Creates Andy, character played by user
         window.display();
         window.clear();
     }
