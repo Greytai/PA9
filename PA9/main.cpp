@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "libraries.hpp"
-#include "andy.hpp"
+#include "Player.hpp"
 
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
     int shotTimer = 0; // timer that gets compared to andy's shotRate value to limit firerate
 
     //Test
-    Andy andy;
+    Player andy;
 
     // hearts setup
     sf::Texture tHeartFull, tHeartEmpty;

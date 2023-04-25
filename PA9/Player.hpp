@@ -10,11 +10,11 @@ Aiden Gardner
 Class for playable character, inherits character class
 Creates graphics in the constuctor, cleans up main.
 */
-class Andy : public Character
+class Player : public Character
 {
 public:
 	//Constructor
-	Andy() : Character() 
+	Player() : Character() 
 	{ 
 	this->maxHealth = 3;
 	this->Shot = Projectile();
@@ -27,7 +27,7 @@ public:
 	};
 
 	//Deconstructor
-	~Andy() {};
+	~Player() {};
 
 	//Setter
 	void setMaxHealth(int newMaxHealth) { this->maxHealth = newMaxHealth; };
