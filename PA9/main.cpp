@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "libraries.hpp"
 #include "Player.hpp"
+#include "enemy.hpp"
 
 int main(void)
 {
@@ -27,6 +28,7 @@ int main(void)
 
     //Test
     Player andy;
+    Enemy enemy;
 
     // hearts setup
     sf::Texture tHeartFull, tHeartEmpty;
@@ -141,6 +143,7 @@ int main(void)
         }
 
 
+        window.draw(enemy);
 
         window.draw(andy); //Creates Andy, character played by user
         window.display();
