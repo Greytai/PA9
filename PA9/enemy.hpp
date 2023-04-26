@@ -17,8 +17,9 @@ public:
 	{
 		this->texture.loadFromFile("Student.png");
 		this->setTexture(texture);
-
 		this->setSize(5);
+
+		this->randomLocation();
 	};
 
 	//Destructor

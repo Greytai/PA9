@@ -35,14 +35,25 @@ public:
 
         //Test
         Player andy;
-        Enemy enemy;
 
-        enemy.randomLocation();
+        std::vector <Enemy> enemies;
+        enemies.push_back(Enemy());
+        enemies[0].setPosition(-1000, -1000);
+        enemies.push_back(Enemy());
+        enemies.push_back(Enemy());
+
+
+
+        int enemyIterator;
 
         andy.Shot.projectilesUP.push_back(andy.Shot.projectile);
+        andy.Shot.projectilesUP[0].setPosition(5000, 5000);
         andy.Shot.projectilesDOWN.push_back(andy.Shot.projectile);
+        andy.Shot.projectilesDOWN[0].setPosition(5000, 5000);
         andy.Shot.projectilesLEFT.push_back(andy.Shot.projectile);
+        andy.Shot.projectilesLEFT[0].setPosition(5000, 5000);
         andy.Shot.projectilesRIGHT.push_back(andy.Shot.projectile);
+        andy.Shot.projectilesRIGHT[0].setPosition(5000, 5000);
 
         // hearts setup
         sf::Texture tHeartFull, tHeartEmpty;
@@ -155,6 +166,43 @@ public:
                 window.draw(andy.Shot.projectilesDOWN[iDOWN]);
             }
 
+            // Enemy logic
+            enemyIterator = 0;
+            while (enemyIterator < enemies.size())
+            {
+                // andy gets hit
+                if (andy.getGlobalBounds().intersects(enemies[enemyIterator].getGlobalBounds())) 
+                {
+                    if (andy.getHealth() > 1) // still alive after hit
+                    {
+                        andy.setHealth(andy.getHealth() - 1);
+                    }
+                    if (andy.getHealth() == 1) // dead after hit
+                    {
+                        // GAME OVER PROCEDURE
+                    }
+                }
+
+                // enemy gets shot
+                for (size_t i = 0; i < andy.Shot.projectilesUP.size(); i++)
+                {
+                    for (size_t k = 0; k < enemies.size(); k++)
+                    {
+                        if (andy.Shot.projectilesUP[i].getGlobalBounds().intersects(enemies[k].getGlobalBounds()))
+                        {
+                          enemies.erase(enemies.begin() + k);
+                          andy.Shot.projectilesUP.erase(andy.Shot.projectilesUP.begin() + i);
+                          break;
+                        }
+                    }
+                }
+
+
+                // draw enemies
+                window.draw(enemies[enemyIterator]);
+                enemyIterator++;
+            }
+          
 
             // UI
             curHearts = andy.getHealth();
@@ -164,7 +212,7 @@ public:
             {
                 MaxHeartFull[heartIterator].setPosition(15 + (55 * heartIterator), 15); // positions based off vector index
                 window.draw(MaxHeartFull[heartIterator]);
-
+         
                 heartIterator++;
             }
             if (curHearts < maxHearts)
@@ -173,19 +221,16 @@ public:
                 {
                     MaxHeartEmpty[heartIterator - curHearts].setPosition(15 + (55 * heartIterator), 15);
                     window.draw(MaxHeartEmpty[heartIterator - curHearts]);
-
+         
                     heartIterator++;
                 }
-
+         
             }
             // Misc.
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 exit(0);
             }
-
-
-            window.draw(enemy);
 
             window.draw(andy); //Creates Andy, character played by user
             window.display();
