@@ -2,7 +2,7 @@
 
 #include "libraries.hpp"
 
-class Projectile : public sf::Sprite
+class Projectile
 {
 public:
 	Projectile()
@@ -21,7 +21,7 @@ public:
 	void set_shotSize(double x)
 	{
 		this->shotSize = x;
-		this->setScale(this->get_shotSize(), this->get_shotSize());
+		this->projectile.setRadius(this->get_shotSize());
 	}
 	void set_shotSpeed(double x)
 	{
@@ -30,6 +30,10 @@ public:
 	void set_shotRate(int x)
 	{
 		this->shotRate = x;
+	}
+	void set_shotFillColor(sf::Color color)
+	{
+		this->projectile.setFillColor(color);
 	}
 
 	// getters
@@ -49,6 +53,13 @@ public:
 	{
 		return this->shotRate;
 	}
+
+	// misc.
+	sf::CircleShape projectile;
+	std::vector <sf::CircleShape> projectilesUP;
+	std::vector <sf::CircleShape> projectilesDOWN;
+	std::vector <sf::CircleShape> projectilesLEFT;
+	std::vector <sf::CircleShape> projectilesRIGHT;
 
 private:
 	double shotDamage;

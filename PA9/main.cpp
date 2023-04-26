@@ -29,6 +29,10 @@ int main(void)
     //Test
     Player andy;
     Enemy enemy;
+    andy.Shot.projectilesUP.push_back(andy.Shot.projectile);
+    andy.Shot.projectilesDOWN.push_back(andy.Shot.projectile);
+    andy.Shot.projectilesLEFT.push_back(andy.Shot.projectile);
+    andy.Shot.projectilesRIGHT.push_back(andy.Shot.projectile);
 
     // hearts setup
     sf::Texture tHeartFull, tHeartEmpty;
@@ -86,33 +90,61 @@ int main(void)
             // the lower the shotRate, the faster andy shoots
             shotTimer++;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && shotTimer > andy.Shot.get_shotRate())
+        for (size_t iUP = 0; iUP < andy.Shot.projectilesUP.size(); iUP++)
         {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && shotTimer >= andy.Shot.get_shotRate())
+            {
+                andy.Shot.projectile.setPosition(andy.getPosition());
+                andy.Shot.projectilesUP.push_back(andy.Shot.projectile);
 
-            // this needs redoing
-            andy.Shot.setPosition(andy.getPosition());
-            andy.Shots.push_back(andy.Shot);
+                shotTimer = 0;
+            }
+            andy.Shot.projectilesUP[iUP].move(0, -andy.Shot.get_shotSpeed());
 
-            shotTimer = 0;
+            window.draw(andy.Shot.projectilesUP[iUP]);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && shotTimer > andy.Shot.get_shotRate())
+        for (size_t iLEFT = 0; iLEFT < andy.Shot.projectilesLEFT.size(); iLEFT++)
         {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && shotTimer >= andy.Shot.get_shotRate())
+            {
+                andy.Shot.projectile.setPosition(andy.getPosition());
+                andy.Shot.projectilesLEFT.push_back(andy.Shot.projectile);
 
+                shotTimer = 0;
+            }
+            andy.Shot.projectilesLEFT[iLEFT].move(-andy.Shot.get_shotSpeed(), 0);
 
-            shotTimer = 0;
+            window.draw(andy.Shot.projectilesLEFT[iLEFT]);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && shotTimer > andy.Shot.get_shotRate())
+        for (size_t iRIGHT = 0; iRIGHT < andy.Shot.projectilesRIGHT.size(); iRIGHT++)
         {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && shotTimer >= andy.Shot.get_shotRate())
+            {
+                andy.Shot.projectile.setPosition(andy.getPosition());
+                andy.Shot.projectilesRIGHT.push_back(andy.Shot.projectile);
+
+                shotTimer = 0;
+            }
+            andy.Shot.projectilesRIGHT[iRIGHT].move(andy.Shot.get_shotSpeed(), 0);
 
 
-            shotTimer = 0;
+            window.draw(andy.Shot.projectilesRIGHT[iRIGHT]);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && shotTimer > andy.Shot.get_shotRate())
+        for (size_t iDOWN = 0; iDOWN < andy.Shot.projectilesDOWN.size(); iDOWN++)
         {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && shotTimer >= andy.Shot.get_shotRate())
+            {
+                andy.Shot.projectile.setPosition(andy.getPosition());
+                andy.Shot.projectilesDOWN.push_back(andy.Shot.projectile);
+
+                shotTimer = 0;
+            }
+            andy.Shot.projectilesDOWN[iDOWN].move(0, andy.Shot.get_shotSpeed());
 
 
-            shotTimer = 0;
+            window.draw(andy.Shot.projectilesDOWN[iDOWN]);
         }
+
 
         // UI
         curHearts = andy.getHealth();

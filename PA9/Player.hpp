@@ -31,25 +31,28 @@ public:
 
 	//Setter
 	void setMaxHealth(int newMaxHealth) { this->maxHealth = newMaxHealth; };
-	
+
 	//Getter
 	int getMaxHealth() { return (this->maxHealth); };
 
 	//Unique
-	std::vector <Projectile> Shots;
 	Projectile Shot;
 
 	//Gets values to default/standard values
 	void set_default()
 	{
+		// player
 		this->setSpeed(10);
 		this->setSize(3.5);
 		this->setHealth(3);
 		this->setMaxHealth(3);
+
+		// player shot
+		this->Shot.set_shotFillColor(sf::Color::Red);
 		this->Shot.set_shotDamage(1);
-		this->Shot.set_shotSize(1);
+		this->Shot.set_shotSize(30);
 		this->Shot.set_shotSpeed(8);
-		this->Shot.set_shotRate(1);
+		this->Shot.set_shotRate(10);
 	}
 
 private:
