@@ -14,7 +14,13 @@ class Menu
 {
 public:
 	//Constructor
-	Menu() { this->choice = 0; };
+	Menu() 
+	{ 
+		this->choice = 0;
+
+		this->menuRunner();
+	};
+
 	//Setter
 	void setChoice(int num) { this->choice = num; };
 	//Getter

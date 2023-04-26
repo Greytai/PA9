@@ -7,9 +7,10 @@
 
 int main(void)
 {
-	Menu menu;
+    //Random time generator
+    srand((unsigned)time(NULL));
 
-	menu.menuRunner();
+	Menu menu;
     
     //Program will only continue once they have entered "Play" in menu.
 
@@ -29,6 +30,9 @@ int main(void)
     //Test
     Player andy;
     Enemy enemy;
+
+    enemy.randomLocation();
+
     andy.Shot.projectilesUP.push_back(andy.Shot.projectile);
     andy.Shot.projectilesDOWN.push_back(andy.Shot.projectile);
     andy.Shot.projectilesLEFT.push_back(andy.Shot.projectile);
