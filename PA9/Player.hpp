@@ -48,17 +48,31 @@ public:
 		this->setMaxHealth(3);
 		this->setPosition(960, 540);
 
+		// test case 3
+		if (this->getSpeed() == 10 && this->getSize() == 3.5 && this->getHealth() == 3 && this->getMaxHealth() == 3)
+		{
+			this->isDefault = true;
+		}
+
 		// player shot
 		this->Shot.set_shotFillColor(sf::Color::Red);
 		this->Shot.set_shotDamage(1);
 		this->Shot.set_shotSize(5);
 		this->Shot.set_shotSpeed(30);
 		this->Shot.set_shotRate(10);
+
+		// test case 4
+		if (this->Shot.get_shotDamage() == 1 && this->Shot.get_shotSize() == 5 && this->Shot.get_shotSpeed() == 30 && this->Shot.get_shotRate() == 10)
+		{
+			this->isShotDefault = true;
+		}
 	}
 
 private:
 	//Max Health
 	int maxHealth;
+	bool isDefault;
+	bool isShotDefault;
 
 	//Visuals
 	sf::Texture texture;
