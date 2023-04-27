@@ -8,18 +8,18 @@
 class Game
 {
 public:
-    //Constructor
-    Game() {};
+	//Constructor
+	Game() {};
 
-    //Destructor
-    ~Game() {};
+	//Destructor
+	~Game() {};
 
-    /*
-    Aiden Gardner
+	/*
+	Aiden Gardner
     Runs game
-    */
-    void gameRunner()
-    {
+	*/
+	void gameRunner()
+	{
         //Creates game window called "window"
         sf::RenderWindow window(sf::VideoMode(1920, 1080), "Andy's Classroom");
         window.setFramerateLimit(30);
@@ -30,7 +30,7 @@ public:
 
         // enemy texture
         sf::Texture enemyTexture;
-        enemyTexture.loadFromFile("Student.png");
+        enemyTexture.loadFromFile("bug.png");
 
         // classroom texture
         sf::Texture classroomTexture;
@@ -95,15 +95,15 @@ public:
         sf::Time time;
         sf::Text curTimeText, scoreText, timeText, curScoreText;
         sf::Font font;
-
+        
         font.loadFromFile("RobotoMono-Regular.ttf");
-
+       
         curScoreText.setFont(font);
         curScoreText.setCharacterSize(40);
         curScoreText.setFillColor(sf::Color::White);
         curScoreText.setStyle(sf::Text::Bold);
         curScoreText.setPosition(175, 65);
-
+       
         scoreText.setFont(font);
         scoreText.setCharacterSize(40);
         scoreText.setFillColor(sf::Color::White);
@@ -224,12 +224,12 @@ public:
             {
                 enemies.push_back(Enemy(enemyTexture));
             }
-
+            
             enemyIterator = 0;
             while (enemyIterator < enemies.size())
             {
                 // andy gets hit
-                if (andy.getGlobalBounds().intersects(enemies[enemyIterator].getGlobalBounds()) && iFramesClock.getElapsedTime().asSeconds() > 1.5)
+                if (andy.getGlobalBounds().intersects(enemies[enemyIterator].getGlobalBounds()) && iFramesClock.getElapsedTime().asSeconds() > 1.5) 
                 {
                     if (andy.getHealth() > 1) // still alive after hit
                     {
@@ -250,11 +250,11 @@ public:
                     {
                         if (andy.Shot.projectilesUP[i].getGlobalBounds().intersects(enemies[k].getGlobalBounds()))
                         {
-                            enemies.erase(enemies.begin() + k);
-                            andy.Shot.projectilesUP.erase(andy.Shot.projectilesUP.begin() + i);
-                            intScore += 2.5 * clock.getElapsedTime().asSeconds(); // score increases on kill
+                          enemies.erase(enemies.begin() + k);
+                          andy.Shot.projectilesUP.erase(andy.Shot.projectilesUP.begin() + i);
+                          intScore += 2.5 * clock.getElapsedTime().asSeconds(); // score increases on kill
 
-                            break;
+                          break;
                         }
                     }
                 }
@@ -263,7 +263,7 @@ public:
                 window.draw(enemies[enemyIterator]);
                 enemyIterator++;
             }
-
+          
 
             // UI
                 // Health
@@ -274,7 +274,7 @@ public:
             {
                 MaxHeartFull[heartIterator].setPosition(15 + (55 * heartIterator), 15); // positions based off vector index
                 window.draw(MaxHeartFull[heartIterator]);
-
+         
                 heartIterator++;
             }
             if (curHearts < maxHearts)
@@ -283,10 +283,10 @@ public:
                 {
                     MaxHeartEmpty[heartIterator - curHearts].setPosition(15 + (55 * heartIterator), 15);
                     window.draw(MaxHeartEmpty[heartIterator - curHearts]);
-
+         
                     heartIterator++;
                 }
-
+         
             }
 
             // Timekeeping
@@ -319,7 +319,7 @@ public:
             window.draw(andy); //Creates Andy, character played by user
             window.display();
         }
-    };
+	};
 
 private:
 
