@@ -11,12 +11,22 @@ public:
 	highScore(string name, int score) 
 	{
 		this->file.open("scores.txt");
+		if (this->file.is_open()) // test case 1
+		{
+			this->isOpen = true;
+		}
 		this->name = name;
 		this->score = score;
 	};
 
 	//Deconstructor, closes file
-	~highScore() { this->file.close(); };
+	~highScore() 
+	{ 
+		if (!this->file.is_open()) // test case 1
+		{
+			this->isClosed = true;
+		}
+	}
 
 	//Setter
 	void setName(string name) { this->name = name; };
@@ -93,4 +103,6 @@ private:
 	fstream file;
 	string name;
 	int score;
+	bool isOpen;
+	bool isClosed;
 };

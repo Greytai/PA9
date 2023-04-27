@@ -128,9 +128,16 @@ public:
         timeText.setPosition(17, 105);
         timeText.setString("Time:");
 
-        //Game
+        bool windowisOpen;
+
+
+        // GAME STARTS HERE
         while (window.isOpen())
         {
+            if (window.isOpen()) // test case 5
+            {
+                windowisOpen = true;
+            }
             sf::Event event;
             while (window.pollEvent(event))
             {
