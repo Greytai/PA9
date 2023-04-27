@@ -18,7 +18,7 @@ public:
 	Aiden Gardner
     Runs game
 	*/
-	void gameRunner()
+	int gameRunner()
 	{
         //Creates game window called "window"
         sf::RenderWindow window(sf::VideoMode(1920, 1080), "Andy's Classroom");
@@ -389,6 +389,7 @@ public:
             if (andy.getIsAlive() == false)
             {
                 // GAME OVER
+                return intScore;
             }
 
             // Misc.

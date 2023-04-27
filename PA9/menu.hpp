@@ -26,12 +26,22 @@ public:
 	//Getter
 	int getChoice() { return this->choice; };
 
+	void printTitle()
+	{
+		cout << "  ___            _       _       _____ _ " << endl;
+		cout << " / _ \\          | |     ( )     /  __ \\ |" << endl;
+		cout << "/ /_\\ \\_ __   __| |_   _|/ ___  | /  \\/ | __ _ ___ ___ _ __ ___   ___  _ __ ___  " << endl;
+		cout << "|  _  | '_ \\ / _` | | | | / __| | |   | |/ _` / __/ __| '__/ _ \\ / _ \\| '_ ` _ \\ " << endl;
+		cout << "| | | | | | | (_| | |_| | \\__ \\ | \\__/\\ | (_| \\__ \\__ \\ | | (_) | (_) | | | | | |" << endl;
+		cout << "\\_| |_/_| |_|\\__,_|\\__, | |___/  \\____/_|\\__,_|___/___/_|  \\___/ \\___/|_| |_| |_|" << endl;
+		cout << "                    __/ |" << endl;
+		cout << "                   |___/ " << endl;
+	};
+
 	//display menu and options
 	void displayMenu()
 	{
-		cout << "================" << endl;
-		cout << "Andy's Classroom" << endl;
-		cout << "================" << endl;
+		this->printTitle();
 
 		cout << endl;
 
@@ -99,6 +109,20 @@ public:
 		cout << "ESC/Escape: Close Game" << endl;
 
 		system("pause");
+	};
+
+
+	string askName()
+	{
+		string nameEntry;
+
+		cout << "What name would you like to save your score under?" << endl;
+
+		cin >> nameEntry;
+		
+		cout << endl;
+
+		return nameEntry;
 	};
 
 private:
