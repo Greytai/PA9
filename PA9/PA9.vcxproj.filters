@@ -24,10 +24,10 @@
     <ClInclude Include="libraries.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game.hpp">
+    <ClInclude Include="test.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="test.hpp">
+    <ClInclude Include="game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

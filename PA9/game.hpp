@@ -47,14 +47,18 @@ public:
         //Test
         Player andy;
 
+        Enemy enemy;
+        enemy.setTexture(enemyTexture);
+
         std::vector <Enemy> enemies;
-        enemies.push_back(Enemy(enemyTexture));
+        enemies.push_back(Enemy(enemy));
         enemies[0].setPosition(-1000, -1000);
-        enemies.push_back(Enemy(enemyTexture));
-        enemies.push_back(Enemy(enemyTexture));
+        enemies.push_back(Enemy(enemy));
+        enemy.randomLocation();
+        enemies.push_back(Enemy(enemy));
 
         int enemyIterator;
-        int enemySpawner;
+        int x, y;
 
         andy.Shot.projectilesUP.push_back(andy.Shot.projectile);
         andy.Shot.projectilesUP[0].setPosition(5000, 5000);
@@ -222,8 +226,43 @@ public:
             // Enemy logic
             if ((rand() % 60) == 1) // rand spawn
             {
-                enemies.push_back(Enemy(enemyTexture));
+                enemy.randomLocation();
+                enemies.push_back(Enemy(enemy));
             }
+            
+            enemyIterator = 0;
+            
+            while (enemyIterator < enemies.size()) // enemy movement
+            {
+                if (enemies[enemyIterator].getPosition().y < 175)
+                {
+                    // can't go up
+                    y = rand() % 30;
+                }
+                else if (enemies[enemyIterator].getPosition().y > 890)
+                {
+                    // can't go down
+                    y = -(rand() % 30);
+                }
+
+                if (enemies[enemyIterator].getPosition().x < 0)
+                {
+                    // can't go left
+                    x = rand() % 30;
+                }
+                else if (enemies[enemyIterator].getPosition().x > 1868)
+                {
+                    // can't go right
+                    x = -(rand() % 30);
+                }
+
+                if (enemyIterator != 0)
+                {
+                    enemies[enemyIterator].move(x, y);
+                }
+                enemyIterator++;
+            }
+
             
             enemyIterator = 0;
             while (enemyIterator < enemies.size())
@@ -258,6 +297,48 @@ public:
                         }
                     }
                 }
+                for (size_t i = 0; i < andy.Shot.projectilesLEFT.size(); i++)
+                {
+                    for (size_t k = 0; k < enemies.size(); k++)
+                    {
+                        if (andy.Shot.projectilesLEFT[i].getGlobalBounds().intersects(enemies[k].getGlobalBounds()))
+                        {
+                            enemies.erase(enemies.begin() + k);
+                            andy.Shot.projectilesLEFT.erase(andy.Shot.projectilesLEFT.begin() + i);
+                            intScore += 2.5 * clock.getElapsedTime().asSeconds(); // score increases on kill
+
+                            break;
+                        }
+                    }
+                }
+                for (size_t i = 0; i < andy.Shot.projectilesDOWN.size(); i++)
+                {
+                    for (size_t k = 0; k < enemies.size(); k++)
+                    {
+                        if (andy.Shot.projectilesDOWN[i].getGlobalBounds().intersects(enemies[k].getGlobalBounds()))
+                        {
+                            enemies.erase(enemies.begin() + k);
+                            andy.Shot.projectilesDOWN.erase(andy.Shot.projectilesDOWN.begin() + i);
+                            intScore += 2.5 * clock.getElapsedTime().asSeconds(); // score increases on kill
+
+                            break;
+                        }
+                    }
+                }
+                for (size_t i = 0; i < andy.Shot.projectilesRIGHT.size(); i++)
+                {
+                    for (size_t k = 0; k < enemies.size(); k++)
+                    {
+                        if (andy.Shot.projectilesRIGHT[i].getGlobalBounds().intersects(enemies[k].getGlobalBounds()))
+                        {
+                            enemies.erase(enemies.begin() + k);
+                            andy.Shot.projectilesRIGHT.erase(andy.Shot.projectilesRIGHT.begin() + i);
+                            intScore += 2.5 * clock.getElapsedTime().asSeconds(); // score increases on kill
+
+                            break;
+                        }
+                    }
+                }
 
                 // draw enemies
                 window.draw(enemies[enemyIterator]);
@@ -289,7 +370,7 @@ public:
          
             }
 
-            // Timekeeping
+                // Timekeeping
             intTime = clock.getElapsedTime().asSeconds(); // starts from time to float to int
             stringTime = std::to_string(intTime); // sets value to string
             curTimeText.setString(stringTime); // prints as time
@@ -297,7 +378,7 @@ public:
             window.draw(curTimeText);
             window.draw(timeText);
 
-            // Scorekeeping
+             // Scorekeeping
             stringScore = std::to_string(intScore);
             curScoreText.setString(stringScore);
 

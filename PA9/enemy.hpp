@@ -13,8 +13,10 @@ class Enemy : public Character
 {
 public:
 	//Constructor
-	Enemy(sf::Texture texture) 
+	Enemy() 
 	{
+		sf::Texture texture;
+		texture.loadFromFile("bug.png");
 		this->setTexture(texture);
 		this->setSize(5);
 
