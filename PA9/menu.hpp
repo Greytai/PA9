@@ -7,7 +7,6 @@ using std::endl;
 using std::string;
 
 /*
-Aiden Gardner
 Text-based menu
 */
 class Menu
@@ -106,6 +105,10 @@ public:
 		cout << "A: Move Left" << endl;
 		cout << "S: Move Down" << endl;
 		cout << "D: Move Right" << endl;
+		cout << "Up Arrow: Shoot Up" << endl;
+		cout << "Left Arrow: Shoot Left" << endl;
+		cout << "Down Arrow: Shoot Down" << endl;
+		cout << "Right Arrow: Shoot Right: << endl;
 		cout << "ESC/Escape: Close Game" << endl;
 
 		system("pause");
