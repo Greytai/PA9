@@ -23,8 +23,3 @@ Test Cases:
 3. player.hpp → isDefault
 4. player.hpp → isShotDefault
 5. game.hpp → windowisOpen
-
-IMPORTANT:
-If it is not compiling or not loading, an issue may be that the SFML directory is not correct. Likely, the [user] in the directory is under one of our names- not yours. Which results in an invalid director or an "Graphics.hpp not loading". Similar issue will arise if debug folder is not working.
-
-Thank you!
