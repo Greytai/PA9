@@ -8,18 +8,18 @@
 class Game
 {
 public:
-	//Constructor
-	Game() {};
+    //Constructor
+    Game() {};
 
-	//Destructor
-	~Game() {};
+    //Destructor
+    ~Game() {};
 
-	/*
-	Aiden Gardner
+    /*
+    Aiden Gardner
     Runs game
-	*/
-	void gameRunner()
-	{
+    */
+    void gameRunner()
+    {
         //Creates game window called "window"
         sf::RenderWindow window(sf::VideoMode(1920, 1080), "Andy's Classroom");
         window.setFramerateLimit(30);
@@ -27,6 +27,17 @@ public:
         // shot texture
         sf::Texture defaultShot;
         defaultShot.loadFromFile("A+.png");
+
+        // enemy texture
+        sf::Texture enemyTexture;
+        enemyTexture.loadFromFile("Student.png");
+
+        // classroom texture
+        sf::Texture classroomTexture;
+        classroomTexture.loadFromFile("Classroom.jpg");
+        sf::Sprite classroomSprite;
+        classroomSprite.setTexture(classroomTexture);
+        classroomSprite.setScale(2, 1.5);
 
 
         //andy.Shot.setTexture(defaultShot); // sets sprite texture to default
@@ -37,14 +48,13 @@ public:
         Player andy;
 
         std::vector <Enemy> enemies;
-        enemies.push_back(Enemy());
+        enemies.push_back(Enemy(enemyTexture));
         enemies[0].setPosition(-1000, -1000);
-        enemies.push_back(Enemy());
-        enemies.push_back(Enemy());
-
-
+        enemies.push_back(Enemy(enemyTexture));
+        enemies.push_back(Enemy(enemyTexture));
 
         int enemyIterator;
+        int enemySpawner;
 
         andy.Shot.projectilesUP.push_back(andy.Shot.projectile);
         andy.Shot.projectilesUP[0].setPosition(5000, 5000);
@@ -75,6 +85,45 @@ public:
         int maxHearts = 0;
         int heartIterator = 0;
 
+        // invincibility frames
+        sf::Clock iFramesClock; // will track time since last hit
+
+        // Score and Time
+        int intTime = 0, intScore = 0;
+        string stringTime, stringScore;
+        sf::Clock clock;
+        sf::Time time;
+        sf::Text curTimeText, scoreText, timeText, curScoreText;
+        sf::Font font;
+
+        font.loadFromFile("RobotoMono-Regular.ttf");
+
+        curScoreText.setFont(font);
+        curScoreText.setCharacterSize(40);
+        curScoreText.setFillColor(sf::Color::White);
+        curScoreText.setStyle(sf::Text::Bold);
+        curScoreText.setPosition(175, 65);
+
+        scoreText.setFont(font);
+        scoreText.setCharacterSize(40);
+        scoreText.setFillColor(sf::Color::White);
+        scoreText.setStyle(sf::Text::Bold);
+        scoreText.setPosition(17, 65);
+        scoreText.setString("Score:");
+
+        curTimeText.setFont(font);
+        curTimeText.setCharacterSize(40);
+        curTimeText.setFillColor(sf::Color::White);
+        curTimeText.setStyle(sf::Text::Bold);
+        curTimeText.setPosition(175, 105);
+
+        timeText.setFont(font);
+        timeText.setCharacterSize(40);
+        timeText.setFillColor(sf::Color::White);
+        timeText.setStyle(sf::Text::Bold);
+        timeText.setPosition(17, 105);
+        timeText.setString("Time:");
+
         //Game
         while (window.isOpen())
         {
@@ -85,20 +134,24 @@ public:
                     window.close();
             }
 
+            window.clear();
+
+            window.draw(classroomSprite);
+
             // Movement
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) //Moves Andy Up/North
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && andy.getPosition().y > 175) //Moves Andy Up/North
             {
                 andy.move(0, -andy.getSpeed());
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) //Moves Andy Left/West
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && andy.getPosition().x > 0) //Moves Andy Left/West
             {
                 andy.move(-andy.getSpeed(), 0);
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) //Moves Andy Down/South
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && andy.getPosition().y < 890) //Moves Andy Down/South
             {
                 andy.move(0, andy.getSpeed());
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //Moves Andy Right/East
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && andy.getPosition().x < 1868) //Moves Andy Right/East
             {
                 andy.move(andy.getSpeed(), 0);
             }
@@ -167,11 +220,16 @@ public:
             }
 
             // Enemy logic
+            if ((rand() % 60) == 1) // rand spawn
+            {
+                enemies.push_back(Enemy(enemyTexture));
+            }
+
             enemyIterator = 0;
             while (enemyIterator < enemies.size())
             {
                 // andy gets hit
-                if (andy.getGlobalBounds().intersects(enemies[enemyIterator].getGlobalBounds())) 
+                if (andy.getGlobalBounds().intersects(enemies[enemyIterator].getGlobalBounds()) && iFramesClock.getElapsedTime().asSeconds() > 1.5)
                 {
                     if (andy.getHealth() > 1) // still alive after hit
                     {
@@ -179,8 +237,10 @@ public:
                     }
                     if (andy.getHealth() == 1) // dead after hit
                     {
-                        // GAME OVER PROCEDURE
+                        andy.setHealth(0);
+                        andy.setIsAlive(false);
                     }
+                    iFramesClock.restart(); // responsible for invincibility after being hit
                 }
 
                 // enemy gets shot
@@ -190,21 +250,23 @@ public:
                     {
                         if (andy.Shot.projectilesUP[i].getGlobalBounds().intersects(enemies[k].getGlobalBounds()))
                         {
-                          enemies.erase(enemies.begin() + k);
-                          andy.Shot.projectilesUP.erase(andy.Shot.projectilesUP.begin() + i);
-                          break;
+                            enemies.erase(enemies.begin() + k);
+                            andy.Shot.projectilesUP.erase(andy.Shot.projectilesUP.begin() + i);
+                            intScore += 2.5 * clock.getElapsedTime().asSeconds(); // score increases on kill
+
+                            break;
                         }
                     }
                 }
-
 
                 // draw enemies
                 window.draw(enemies[enemyIterator]);
                 enemyIterator++;
             }
-          
+
 
             // UI
+                // Health
             curHearts = andy.getHealth();
             maxHearts = andy.getMaxHealth();
             heartIterator = 0;
@@ -212,7 +274,7 @@ public:
             {
                 MaxHeartFull[heartIterator].setPosition(15 + (55 * heartIterator), 15); // positions based off vector index
                 window.draw(MaxHeartFull[heartIterator]);
-         
+
                 heartIterator++;
             }
             if (curHearts < maxHearts)
@@ -221,11 +283,33 @@ public:
                 {
                     MaxHeartEmpty[heartIterator - curHearts].setPosition(15 + (55 * heartIterator), 15);
                     window.draw(MaxHeartEmpty[heartIterator - curHearts]);
-         
+
                     heartIterator++;
                 }
-         
+
             }
+
+            // Timekeeping
+            intTime = clock.getElapsedTime().asSeconds(); // starts from time to float to int
+            stringTime = std::to_string(intTime); // sets value to string
+            curTimeText.setString(stringTime); // prints as time
+
+            window.draw(curTimeText);
+            window.draw(timeText);
+
+            // Scorekeeping
+            stringScore = std::to_string(intScore);
+            curScoreText.setString(stringScore);
+
+            window.draw(curScoreText);
+            window.draw(scoreText);
+
+            // Gameover Procedure
+            if (andy.getIsAlive() == false)
+            {
+                // GAME OVER
+            }
+
             // Misc.
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
@@ -234,9 +318,9 @@ public:
 
             window.draw(andy); //Creates Andy, character played by user
             window.display();
-            window.clear();
         }
-	};
+    };
 
 private:
+
 };
