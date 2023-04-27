@@ -75,6 +75,7 @@ public:
 			switch (i)
 			{
 			case 1: this->addScore(this->getName(), this->getScore()); //Adds score to scores.txt
+				cout << "Score recorded!" << endl;
 				break;
 			case 2: this->printScores();//Prints doc onto screen
 				break;
@@ -82,7 +83,7 @@ public:
 				break;
 			default: cout << "Error." << endl;
 			}
-		}while (i!=3);
+		}while (i != 3);
 
 		system("cls");
 
