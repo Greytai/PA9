@@ -235,7 +235,7 @@ public:
                     {
                         andy.setHealth(andy.getHealth() - 1);
                     }
-                    if (andy.getHealth() == 1) // dead after hit
+                    else if (andy.getHealth() == 1) // dead after hit
                     {
                         andy.setHealth(0);
                         andy.setIsAlive(false);
